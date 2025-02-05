@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\User;
@@ -23,6 +24,8 @@ class RegisterController extends Controller
 
         sleep(1);
         $user = User::create($validated);
+
+        event(new Registered($user));
 
         Auth::login($user);
 
