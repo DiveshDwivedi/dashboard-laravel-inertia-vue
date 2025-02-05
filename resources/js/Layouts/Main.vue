@@ -1,7 +1,7 @@
 <script setup>
 import { switchTheme } from "../theme";
 import NavLink from "../Components/NavLink.vue";
-import {  usePage } from "@inertiajs/vue3";
+import { usePage } from "@inertiajs/vue3";
 import { computed, ref } from "vue";
 
 const page = usePage();
@@ -23,7 +23,7 @@ const show = ref(false);
           <div
             @click="show = !show"
             class="flex items-center gap-2 px-2 py-1 rounded-lg hover:bg-slate-700 cursor-pointer"
-            :class="{'bg-slate-700' : show}"
+            :class="{ 'bg-slate-700': show }"
           >
             <p>{{ user.name }}</p>
             <i class="fa-solid fa-angle-down"></i>
@@ -35,15 +35,23 @@ const show = ref(false);
             @click="show = false"
             class="absolute z-50 top-16 right-0 bg-slate-800 text-white rounded-lg border-slate-50 border overflow-hidden w-40"
           >
-            <Link 
-            :href="route('logout')"
-            as="button"
-            method="post"
-            class="block w-full px-6 py-2 hover:bg-slate-700 text-left"
+            <Link
+              :href="route('logout')"
+              as="button"
+              method="post"
+              class="block w-full px-6 py-2 hover:bg-slate-700 text-left"
               >Logout
             </Link>
-            <Link class="block w-full px-6 py-2 hover:bg-slate-700 text-left"
+
+            <Link
+              :href="route('dashboard')"
+              class="block w-full px-6 py-2 hover:bg-slate-700 text-left"
               >Dashboard
+            </Link>
+            <Link
+              :href="route('profile.edit')"
+              class="block w-full px-6 py-2 hover:bg-slate-700 text-left"
+              >Profile
             </Link>
           </div>
         </div>

@@ -30,10 +30,8 @@ class AuthenticateController extends Controller
         if (Auth::attempt($credentials, $request->remember)) {
             $request->session()->regenerate();
 
-            return redirect()->route('home');
+            return redirect()->intended('dashboard');
         }
-
-
 
         return back()->withErrors([
             'email' => 'The provided credentials do not match our records.',
