@@ -27,7 +27,7 @@ const submit = () => {
     <div class="mb-8 text-center">
       <Title>Register a new account</Title>
 
-      <p>Already have account? <TextLink label="Login" routeName="register" /></p>
+      <p>Already have account? <TextLink label="Login" routeName="login" /></p>
     </div>
 
     <ErrorMessage :errors="form.errors"/>
