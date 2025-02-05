@@ -4,24 +4,24 @@ import Title from "../../Components/Title.vue";
 import TextLink from "../../Components/TextLink.vue";
 import InputField from "../../Components/InputField.vue";
 import SubmitBtn from "../../Components/SubmitBtn.vue";
-import CheckBox from "../../Components/CheckBox.vue";
 import ErrorMessage from "../../Components/ErrorMessage.vue";
 import {useForm} from '@inertiajs/vue3';
-import SessionMessages from "../../Components/SessionMessages.vue";
+
+const props = defineProps({
+    token: String,
+    email: String,
+})
 
 const form = useForm({
-  email: "",
+  token: props.token,
+  email: props.email,
   password: "",
-  remember: null,
-});
-
-defineProps({
-  status: String,
+  password_confirmation: "",
 });
 
 const submit = () => {
-  form.post(route("login"), {
-    onFinish: () => form.reset('password'),
+  form.post(route("password.update"), {
+    onFinish: () => form.reset("password", 'password_confirmation'),
   });
 };
 
@@ -30,26 +30,26 @@ const submit = () => {
 <template>
   <Container class="w-1/2">
     <div class="mb-8 text-center">
-      <Title>Login to your account</Title>
-      <p>Need an account? <TextLink label="Register" routeName="register" /></p>
+      <Title>Enter your new password</Title>
 
     </div>
 
     <ErrorMessage :errors="form.errors"/>
-    <SessionMessages :status="status"/>
     
     <form class="space-y-6" @submit.prevent="submit">
 
       <InputField label="Email" type="email" icon="at" v-model="form.email" />
 
       <InputField label="Password" type="password" icon="key" v-model="form.password" />
+      
+      <InputField
+        label="Confirm Password"
+        type="password"
+        icon="key"
+        v-model="form.password_confirmation"
+      />
 
-        <div class="flex items-center justify-between">
-            <CheckBox v-model="form.remember" name="remeber">Remeber me</CheckBox>
-            <TextLink routeName="password.request" label="Forgot Password" />
-        </div>
-
-      <SubmitBtn :disabled="form.processing">Login</SubmitBtn>
+      <SubmitBtn :disabled="form.processing">Reset your password</SubmitBtn>
     </form>
   </Container>
 </template>
