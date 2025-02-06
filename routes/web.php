@@ -1,18 +1,19 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Auth\RegisterController;
+
+
+Route::middleware(['auth'])->group(function() {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('verified')->name('dashboard');
+
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.info');
+});
+
+
 
 Route::inertia('/', 'Home')->name('home');
-
-Route::inertia('/dashboard', 'Dashboard')->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::inertia('/profile', 'Profile/Edit')->middleware(['auth', 'password.confirm'])->name('profile.edit');
-
-// Route::get('/register', [RegisterController::class, 'create'])->name('register');
-// Route::post('/register', [RegisterController::class, 'store']);
-
-Route::resource('/product', RegisterController::class);
 // require __DIR__ . '/auth.php';
-
 require base_path('routes/auth.php');
