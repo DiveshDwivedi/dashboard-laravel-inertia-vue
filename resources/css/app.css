@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    .text-link {
+        @apply text-indigo-600 hover:text-indigo-700 font-medium
+            dark:text-indigo-500 dark:hover:text-indigo-600
+    }
+}
