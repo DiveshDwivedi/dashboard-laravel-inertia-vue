@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('email')->nullable();
             $table->string('link')->nullable();
             $table->string('image')->nullable();
-            $table->boolean('active')->default(false);
+            $table->boolean('status')->default(false);
             $table->timestamps();
         });
     }

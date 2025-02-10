@@ -4,13 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Scope;
 
 class Listing extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['*'];
+    protected $fillable = ['desc', 'title', 'status', 'link', 'image', 'tags', 'email'];
 
     public function user() {
         return $this->belongsTo(User::class);
