@@ -9,10 +9,11 @@ const props = defineProps({
 });
 
 const deleteListing = () => {
-  if (confirm("Are you sure?")) {
+  if (confirm("Are you sure to delete?")) {
     router.delete(route("listing.destroy", props.listing.id));
   }
 };
+
 </script>
 
 <template>
@@ -33,11 +34,12 @@ const deleteListing = () => {
     <div class="w-3/4">
       <!-- Listing info -->
       <div class="mb-6">
-        <div class="flex items-end justify-between mb-2 gap-2">
+        <div class="flex items-end justify-between mb-2">
           <p class="text-slate-400 w-full border-b">Listing detail</p>
 
           <!-- Edit and delete buttons -->
-          <Link
+          <div v-if="canModify" class="pt-4 flex gap-4 items-center">
+            <Link
             :href="route('listing.edit', listing.id)"
             class="bg-green-500 rounded-md text-white px-6 py-2 hover:outline outline-green-500 outline-offset-2"
           >
@@ -51,6 +53,8 @@ const deleteListing = () => {
           >
             Delete
           </button>
+          </div>
+          
         </div>
 
         <h3 class="font-bold text-2xl mb-4">{{ listing.title }}</h3>

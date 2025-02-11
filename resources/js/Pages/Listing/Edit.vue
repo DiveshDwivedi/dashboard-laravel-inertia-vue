@@ -18,7 +18,7 @@ const form = useForm({
   email: props.listing.email,
   link: props.listing.link,
   image: null,
-  _method: "PUT",
+  _method: "PUT", // overriding post method 
 });
 </script>
 

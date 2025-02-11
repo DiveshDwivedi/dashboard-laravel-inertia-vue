@@ -2,13 +2,29 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Middleware\InactiveMiddleware;
 use App\Models\Listing;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
-class ListingController extends Controller
+class ListingController extends Controller implements HasMiddleware
 {
+
+    /**
+     * Undocumented function
+     *
+     * @return void
+     */
+    public static function middleware()
+    {
+        return [new Middleware(['auth', 'verified', InactiveMiddleware::class], except: ['index', 'show'])];
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -26,7 +42,7 @@ class ListingController extends Controller
 
         return Inertia::render('Home', [
             'listings' => $listings,
-            'searchItem' => request(['search'])['search'] ?? null
+            'searchItem' => request(['search'])['search'] ?? null,
         ]);
     }
 
@@ -35,6 +51,8 @@ class ListingController extends Controller
      */
     public function create()
     {
+        Gate::authorize('create', Listing::class);
+
         return Inertia::render('Listing/Create');
     }
 
@@ -43,6 +61,7 @@ class ListingController extends Controller
      */
     public function store(Request $request)
     {
+        Gate::authorize('create', Listing::class);
         $validated = $this->hasValidInputs($request);
 
         if ($request->hasFile('image')) {
@@ -61,10 +80,12 @@ class ListingController extends Controller
      */
     public function show(Listing $listing)
     {
-        
+        Gate::authorize('view', $listing);
+
         return Inertia::render('Listing/Show', [
             'listing' => $listing,
             'user' => $listing->user,
+            'canModify' => Auth::user() ? Auth::user()->can('modify', $listing) : false,
         ]);
     }
 
@@ -73,6 +94,9 @@ class ListingController extends Controller
      */
     public function edit(Listing $listing)
     {
+     
+        Gate::authorize('modify', $listing);
+        
         return Inertia::render('Listing/Edit', [
             'listing' => $listing,
             'message' => session('message'),
@@ -84,6 +108,8 @@ class ListingController extends Controller
      */
     public function update(Request $request, Listing $listing)
     {
+        Gate::authorize('modify', $listing);
+
         $validated = $this->hasValidInputs($request);
 
         if ($request->hasFile('image')) {
@@ -96,8 +122,8 @@ class ListingController extends Controller
         }
 
         $validated['tags'] = $this->formatTags($validated['tags']);
-    
-        $listing->update($validated);
+
+        $listing->update([...$validated, 'status' => false]);
 
         return redirect()->route('listing.edit', [$listing->id])->with('message', 'Listing updated successfully');
     }
@@ -107,6 +133,8 @@ class ListingController extends Controller
      */
     public function destroy(Listing $listing)
     {
+        Gate::authorize('modify', $listing);
+
         if ($listing->image) {
             Storage::disk('public')->delete($listing->image);
         }
