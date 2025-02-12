@@ -4,7 +4,6 @@ namespace App\Policies;
 
 use App\Models\Listing;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class ListingPolicy
 {
@@ -13,7 +12,7 @@ class ListingPolicy
      */
     public function view(?User $user, Listing $listing): bool
     {
-        return $listing->user->role !== 'suspended' && $listing->status == true;
+        return $listing->user->role !== 'suspended' && $listing->status == true || $this->admin($user, $listing);
     }
 
 
@@ -27,6 +26,11 @@ class ListingPolicy
      */
     public function modify(User $user, Listing $listing): bool
     {
-        return $user->id === $listing->user_id && $user->role !== 'suspended';
+        return $user->id === $listing->user_id && $user->role !== 'suspended' || $this->admin($user, $listing);
+    }
+
+    public function admin(User $user, Listing $listing): bool 
+    {
+        return $user->isAdmin();
     }
 }

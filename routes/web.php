@@ -29,7 +29,10 @@ Route::resource('listing', ListingController::class)->except('index');
 Route::middleware(['auth', 'verified', Admin::class])
     ->controller(AdminController::class)
     ->group(function () {
-        Route::get('/admin', 'index')->name('admin');
+        Route::get('/admin', 'index')->name('index');
+        Route::get('/admin/{user}', 'show')->name('show');
+        Route::put('/admin/{user}/role', 'role')->name('role');
+        Route::put('/admin/{listing}/status', 'updateStatus')->name('status');
     });
 
 

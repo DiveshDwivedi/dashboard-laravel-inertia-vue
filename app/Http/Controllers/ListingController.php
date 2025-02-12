@@ -94,7 +94,6 @@ class ListingController extends Controller implements HasMiddleware
      */
     public function edit(Listing $listing)
     {
-     
         Gate::authorize('modify', $listing);
         
         return Inertia::render('Listing/Edit', [
@@ -170,13 +169,6 @@ class ListingController extends Controller implements HasMiddleware
      */
     protected function formatTags($tags)
     {
-        // formating random tag entry 
-        // $tagdata = $request->tags;
-        // $tagArr = explode(',', $tagdata);
-        // $tagTrim = array_map('trim', $tagArr);
-        // $arrayUnique = array_unique($tagTrim)
-        // $hasTag = array_filter($arrayUnique);
-
         return implode(',', array_filter(array_map('trim', array_unique(explode(',', $tags)))));
     }
 }

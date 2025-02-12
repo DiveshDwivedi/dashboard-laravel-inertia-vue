@@ -20,7 +20,7 @@ class Listing extends Model
            $query->where(function ($q) use ($filters) {
                $q
                ->where('title', 'like', '%' . $filters['search'] . '%')
-               ->where('desc', 'like', '%' . $filters['search'] . '%');
+               ->orWhere('desc', 'like', '%' . $filters['search'] . '%');
            });
         }
 
@@ -32,6 +32,11 @@ class Listing extends Model
         if (isset($filters['tag'])) {
             $query
            ->where('tags', 'like', '%' . $filters['tag'] . '%');
+        }
+
+        if (isset($filters['inactive'])) {
+            $query
+           ->where('status', '!=', 1);
         }
     }
 

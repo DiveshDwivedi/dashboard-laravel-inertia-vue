@@ -31,7 +31,7 @@ const show = ref(false);
 
           <Link
               v-if="user.role === 'admin'"
-              :href="route('admin')"
+              :href="route('index')"
               class="hover:bg-slate-700 w-6 h-6 grid place-items-center rounded-full hover:outline outline-1 outline-white"
               >
           <i class="fa-solid fa-lock"></i>
