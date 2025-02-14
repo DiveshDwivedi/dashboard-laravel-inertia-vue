@@ -14,6 +14,10 @@ Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthenticateController::class, 'create'])->name('login');
     Route::post('/login', [AuthenticateController::class, 'store']);
 
+    Route::get('/login/{provider}', [AuthenticateController::class, 'redirectToProvider'])->name('redirect');
+    Route::get('/provider/{callback}', [AuthenticateController::class, 'handleProviderCallback'])->name('callback');
+
+
     // reset password 
     Route::get('/forgot-password', [ResetPasswordController::class, 'requestPassword'])->name('password.request');
 
