@@ -14,7 +14,6 @@ use Inertia\Inertia;
 
 class ListingController extends Controller implements HasMiddleware
 {
-
     /**
      * Undocumented function
      *
