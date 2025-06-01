@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\BlogController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ListingController;
 use App\Http\Controllers\ProfileController;
@@ -25,7 +26,6 @@ Route::get('/', [ListingController::class, 'index'])->name('home');
 Route::resource('listing', ListingController::class)->except('index');
 
 // Admin Routes
-
 Route::middleware(['auth', 'verified', Admin::class])
     ->controller(AdminController::class)
     ->group(function () {
@@ -35,6 +35,18 @@ Route::middleware(['auth', 'verified', Admin::class])
         Route::put('/admin/{listing}/status', 'updateStatus')->name('status');
     });
 
+
+// Blog Routes
+Route::group(
+    [
+        'controller' => BlogController::class,
+        'prefix' => 'blogs',
+        'as' => 'blogs.'
+    ],
+    function () {
+        Route::get('/', 'show')->name('show');
+    }
+);
 
 // Auth Routes 
 // require __DIR__ . '/auth.php';

@@ -1,6 +1,13 @@
 {
-    "name": "laravel/laravel",
-    "type": "project",
+    "name": "Blog/Developer-Console",
+    "type": "Technology",
+    "version": "1.0.0",
+    "authors": [
+        {
+            "name": "Divesh Dwivedi",
+            "role": "Developer",
+            "email": "divesh.dwivedi@outlook.com"
+        }],
     "description": "The skeleton application for the Laravel framework.",
     "keywords": ["laravel", "framework"],
     "license": "MIT",

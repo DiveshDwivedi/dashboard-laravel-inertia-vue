@@ -13,6 +13,7 @@ const show = ref(false);
 <template>
   <!-- overlay, hide dropdown on click anywhere -->
   <div v-show="show" @click="show = false" class="fixed inset-0 z-40"></div>
+  
   <header class="bg-slate-800 text-white">
     <nav class="p-6 mx-auto max-w-screen-lg flex items-center justify-between">
       <NavLink routeName="home" Name="Home">Home</NavLink>

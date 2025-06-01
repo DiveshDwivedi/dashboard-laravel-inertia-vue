@@ -1,5 +1,5 @@
 <script setup>
-import { switchTheme } from "../theme";
+// import { switchTheme } from "../theme";
 
 defineProps({
   routeName: String,
