@@ -22,10 +22,10 @@ class RegisterController extends Controller
             'password' => 'required|confirmed|min:3|max:21'
         ]);
 
-        sleep(1);
         $user = User::create($validated);
 
         event(new Registered($user));
+        sleep(1);
 
         Auth::login($user);
 
